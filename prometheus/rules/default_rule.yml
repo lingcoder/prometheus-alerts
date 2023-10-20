@@ -1,0 +1,30 @@
+# 每个group可以定义多个告警规则(rule)
+groups:
+
+  # 组名, 报警规则组名称，可配置多个
+  - name: 实例存活报警name
+    rules:
+      - alert: 实例存活报警alert
+        # PromQL表达式，相关参数可在prometheus界面中查看
+        expr: up == 0
+        # 报警持续时长 达到 这个时间，才会触发报警， for >= prometheus中的scrape_interval值（每次抓取数据的时间，防止最新的数据还没抓取）
+        for: 30s
+
+        # 自定义标签，允许用户指定要附加到告警上的一组附加标签。
+        labels:
+          # 指定告警级别。：warning,critical,emergency，严重等级依次递增。
+          severity: emergency
+
+        # 定义消息 内容 和 格式，相关参数根据具体的 webhook 而定。
+        annotations:
+          # 推送feishu机器人token，不同的组，可推送到不同群
+          token: "{{ $labels.feishuToken }}"
+          title: "服务宕机报警"
+          serviceName: "{{ $labels.serviceName }}"
+          instance: "{{ $labels.instance }}"
+          # 按钮标题
+          btn: "点击查看详情 :玫瑰:"
+          # 点击按钮跳转的链接
+          link: 'http://192.168.1.222:9090/targets'
+          template: '服务 **${serviceName}**(${instance}) 断联, 请及时处理!'
+          description: '服务宕机'

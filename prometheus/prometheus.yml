@@ -1,0 +1,45 @@
+global:
+  scrape_interval: 30s # 全局抓取数据时间，默认 60s，可在job中覆盖
+  evaluation_interval: 30s # 全局告警计算周期，默认 60s，可在job中覆盖
+
+# alert Manager配置
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - 192.168.1.222:9093
+
+# rule规则配置
+rule_files:
+  - 'rules/*.yml'
+
+# 监控job配置
+scrape_configs:
+
+  # prometheus自带默认 job，不可删除
+  - job_name: 'prometheus'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: [ '192.168.1.222:9090' ] # 抓取数据url，确保在容器中能够访问到，使用docker启动不能写localhost
+
+  # 服务实例 job，可配置多个
+  - job_name: 'springboot_wcong_test'
+    scrape_interval: 15s # 每间隔15s向指定url进行抓取数据，覆盖global中的配置
+    metrics_path: '/actuator/prometheus' # 应用程序暴露的端点
+    static_configs:
+      - targets: [ '192.168.1.222:9010' ]
+        labels:
+          serviceId: 'springboot_wcong_test_one'
+          serviceName: '测试boot应用1'
+          feishuToken: 'xxxx'
+
+  - job_name: 'springboot_wcong_test_two'
+    scrape_interval: 15s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ '192.168.1.222:9020' ]
+        labels:
+          serviceId: 'springboot_wcong_test_two'
+          serviceName: '测试boot应用2'
+          feishuToken: 'xxxx'
+

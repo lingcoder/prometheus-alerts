@@ -1,0 +1,72 @@
+version: '3.9'
+
+networks:
+  default:
+    name: "prometheus-alerts"
+    driver: bridge
+
+volumes:
+  prometheus:
+  grafana:
+
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    restart: "always"
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus:/etc/prometheus"
+      - "prometheus:/prometheus"
+
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    restart: "always"
+    ports:
+      - "9093:9093"
+    volumes:
+      - "./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
+  #    deploy:
+  #      resources:
+  #        limits:
+  #          memory: 256M
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: "always"
+    ports:
+      - "3000:3000"
+    volumes:
+      #      - "./grafana:/etc/grafana"
+      - "grafana:/var/lib/grafana"
+
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: "always"
+    ports:
+      - "9100:9100"
+    container_name: "node-exporter"
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/sys:/host/sys:ro"
+      - "/:/rootfs:ro"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+
+  # dingtalk-bot:
+  #   image: timonwong/prometheus-webhook-dingtalk:v0.3.0
+  #   restart: "always"
+  #   ports:
+  #   - 8060:8060
+  #   container_name: "webhook"      #token指定钉钉
+  #   volumes:
+  #   - "./webhook/dingding.tmpl:/root/dingding.tmpl"  #配置文件
+  #   command:
+  #   - '--ding.profile=webhook1=https://oapi.dingtalk.com/robot/send?access_token=* 钉钉机器人地址'
+  #   - '--template.file=/root/dingding.tmpl'
+
