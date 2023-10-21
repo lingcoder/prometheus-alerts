@@ -6,8 +6,12 @@ networks:
     driver: bridge
 
 volumes:
-  prometheus:
-  grafana:
+  prometheus-data:
+    name: "prometheus-data"
+  grafana-data:
+    name: "grafana-data"
+  alertmanager-data:
+    name: "alertmanager-data"
 
 
 services:
@@ -18,7 +22,7 @@ services:
       - "9090:9090"
     volumes:
       - "./prometheus:/etc/prometheus"
-      - "prometheus:/prometheus"
+      - "prometheus-data:/prometheus"
 
 
   alertmanager:
@@ -28,6 +32,8 @@ services:
       - "9093:9093"
     volumes:
       - "./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
+      - "./alertmanager/rules:/etc/prometheus/rules"
+      - "alertmanager-data:/alertmanager"
   #    deploy:
   #      resources:
   #        limits:
@@ -36,11 +42,16 @@ services:
   grafana:
     image: grafana/grafana:latest
     restart: "always"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD
+      - GF_SECURITY_ADMIN_USER
+      - GF_USERS_DEFAULT_LANGUAGE
     ports:
       - "3000:3000"
     volumes:
-      #      - "./grafana:/etc/grafana"
-      - "grafana:/var/lib/grafana"
+      - "./grafana/grafana.ini:/etc/grafana/grafana.ini"
+      - "./grafana/provisioning:/etc/grafana/provisioning"
+      - "grafana-data:/var/lib/grafana"
 
 
   node-exporter:

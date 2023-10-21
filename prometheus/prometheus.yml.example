@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 30s # 全局抓取数据时间，默认 60s，可在job中覆盖
+  evaluation_interval: 30s # 全局告警计算周期，默认 60s，可在job中覆盖
+
+# alert Manager配置
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - "alertmanager:9093"
+
+# rule规则配置
+rule_files:
+  - 'rules/*.yml'
+  - 'rules/docker-containers/*.yml'
+
+# 监控job配置
+scrape_configs:
+
+  # prometheus自带默认 job，不可删除
+  - job_name: 'prometheus'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: [ 'prometheus:9090' ] # 抓取数据url，确保在容器中能够访问到，使用docker启动不能写localhost
+
+

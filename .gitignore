@@ -1,2 +1,5 @@
 .env
 .data/
+alertmanager.yml
+grafana.ini
+prometheus.yml
