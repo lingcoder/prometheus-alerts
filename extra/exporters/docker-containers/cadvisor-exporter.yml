@@ -1,0 +1,21 @@
+version: '3.9'
+
+networks:
+  default:
+    name: "prometheus-alerts"
+    driver: bridge
+
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/dev/disk/:/dev/disk:ro"
+    ports:
+      - "8081:8080"
+    privileged: true
+    devices:
+      - /dev/kmsg

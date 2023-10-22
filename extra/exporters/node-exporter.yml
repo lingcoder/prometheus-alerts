@@ -1,0 +1,23 @@
+version: '3.9'
+
+networks:
+  default:
+    name: "prometheus-alerts"
+    driver: bridge
+
+services:
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: "always"
+    ports:
+      - "9100:9100"
+    container_name: "node-exporter"
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/sys:/host/sys:ro"
+      - "/:/rootfs:ro"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+

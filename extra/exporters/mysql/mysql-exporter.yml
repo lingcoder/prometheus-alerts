@@ -1,0 +1,20 @@
+version: '3.9'
+
+networks:
+  default:
+    name: "prometheus-alerts"
+    driver: bridge
+
+services:
+  mysql-exporter:
+    image: prom/mysqld-exporter:latest
+    restart: "always"
+    ports:
+      - "9104:9104"
+    container_name: "node-exporter"
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/sys:/host/sys:ro"
+      - "/:/rootfs:ro"
+    command:
+      - '--config.my-cnf=<path_to_cnf>'

@@ -23,4 +23,8 @@ scrape_configs:
     static_configs:
       - targets: [ 'prometheus:9090' ] # 抓取数据url，确保在容器中能够访问到，使用docker启动不能写localhost
 
+  - job_name: 'node-exporter'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: [ 'node-exporter:9100' ]
 

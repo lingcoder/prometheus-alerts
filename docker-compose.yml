@@ -49,7 +49,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "./grafana/grafana.ini:/etc/grafana/grafana.ini"
+#      - "./grafana/grafana.ini:/etc/grafana/grafana.ini"
       - "./grafana/provisioning:/etc/grafana/provisioning"
       - "grafana-data:/var/lib/grafana"
 
@@ -59,7 +59,6 @@ services:
     restart: "always"
     ports:
       - "9100:9100"
-    container_name: "node-exporter"
     volumes:
       - "/proc:/host/proc:ro"
       - "/sys:/host/sys:ro"
@@ -69,12 +68,18 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
 
+  prometheus-notifier:
+    image: lingcoder/prometheus-notifier:latest
+    restart: "always"
+    ports:
+      - "8082:8080"
+
+
   # dingtalk-bot:
   #   image: timonwong/prometheus-webhook-dingtalk:v0.3.0
   #   restart: "always"
   #   ports:
   #   - 8060:8060
-  #   container_name: "webhook"      #token指定钉钉
   #   volumes:
   #   - "./webhook/dingding.tmpl:/root/dingding.tmpl"  #配置文件
   #   command:
