@@ -74,15 +74,3 @@ services:
     ports:
       - "8082:8080"
 
-
-  # dingtalk-bot:
-  #   image: timonwong/prometheus-webhook-dingtalk:v0.3.0
-  #   restart: "always"
-  #   ports:
-  #   - 8060:8060
-  #   volumes:
-  #   - "./webhook/dingding.tmpl:/root/dingding.tmpl"  #配置文件
-  #   command:
-  #   - '--ding.profile=webhook1=https://oapi.dingtalk.com/robot/send?access_token=* 钉钉机器人地址'
-  #   - '--template.file=/root/dingding.tmpl'
-
