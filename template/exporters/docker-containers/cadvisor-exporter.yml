@@ -15,7 +15,7 @@ services:
       - "/var/lib/docker/:/var/lib/docker:ro"
       - "/dev/disk/:/dev/disk:ro"
     ports:
-      - "8081:8080"
+      - "8080:8080"
     privileged: true
     devices:
       - /dev/kmsg
