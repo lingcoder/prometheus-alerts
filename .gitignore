@@ -3,3 +3,4 @@
 alertmanager.yml
 grafana.ini
 prometheus.yml
+.idea

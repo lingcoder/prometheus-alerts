@@ -1,13 +1,19 @@
-# prometheus-alerts
+# Prometheus Alerts
 
-### Prometheus rules:
+------
 
-https://github.com/samber/awesome-prometheus-alerts.git
+#### Grafana Docs:
+https://grafana.com/docs/grafana/latest/
+#### Prometheus Docs:
+https://prometheus.io/docs
+#### Alertmanager Docs
+https://prometheus.io/docs
 
-### Grafana dashboards
+-------
 
+#### Grafana Dashboards
 https://grafana.com/grafana/dashboards/
-
-### Exporters 
-
+#### Exporters
 https://prometheus.io/docs/instrumenting/exporters/
+#### Prometheus Rules:
+https://github.com/samber/awesome-prometheus-alerts.git
