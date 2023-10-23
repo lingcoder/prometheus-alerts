@@ -12,7 +12,7 @@ alerting:
 # rule规则配置
 rule_files:
   - 'rules/*.yml'
-  - 'rules/docker-containers/*.yml'
+# - 'rules/docker-containers/*.yml'
 
 # 监控job配置
 scrape_configs:
