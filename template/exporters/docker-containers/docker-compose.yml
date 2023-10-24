@@ -4,6 +4,7 @@ networks:
   default:
     name: "prometheus-alerts"
     driver: bridge
+    external: true
 
 services:
   cadvisor:

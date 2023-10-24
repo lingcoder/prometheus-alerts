@@ -12,7 +12,9 @@ alerting:
 # rule规则配置
 rule_files:
   - 'rules/*.yml'
+# - 'rules/host-and-hardware/*.yml'
 # - 'rules/docker-containers/*.yml'
+# - 'rules/mysql/*.yml'
 
 # 监控job配置
 scrape_configs:
@@ -28,6 +30,6 @@ scrape_configs:
     static_configs:
       - targets: [ 'node-exporter:9100' ]
 
-#  - job_name: 'cadvisor'
-#    static_configs:
-#      - targets: [ 'cadvisor:8080' ]
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: [ 'cadvisor:8080' ]

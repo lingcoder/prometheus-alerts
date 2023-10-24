@@ -50,7 +50,7 @@ services:
       - "3000:3000"
     volumes:
       # - "./grafana/grafana.ini:/etc/grafana/grafana.ini"
-      - "./grafana/provisioning:/etc/grafana/provisioning"
+      - "./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources"
       - "grafana-data:/var/lib/grafana"
 
 
