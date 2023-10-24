@@ -57,8 +57,8 @@ services:
   node-exporter:
     image: prom/node-exporter:latest
     restart: "always"
-    ports:
-      - "9100:9100"
+#    ports:
+#      - "9100:9100"
     volumes:
       - "/proc:/host/proc:ro"
       - "/sys:/host/sys:ro"
@@ -71,6 +71,6 @@ services:
   prometheus-notifier:
     image: lingcoder/prometheus-notifier:latest
     restart: "always"
-    ports:
-      - "8082:8080"
+#    ports:
+#      - "8080:8080"
 
